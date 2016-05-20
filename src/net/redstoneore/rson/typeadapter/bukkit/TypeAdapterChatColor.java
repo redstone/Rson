@@ -12,7 +12,7 @@ import net.redstoneore.rson.typeadapter.TypeAdapter;
 public class TypeAdapterChatColor extends TypeAdapter<ChatColor>  {	
 
 	@Override
-	public JsonElement toJsonElement(ChatColor src, Type typeOfSrc,JsonSerializationContext context) {
+	public JsonElement toJsonElement(ChatColor src, Type typeOfSrc, JsonSerializationContext context) {
 		return this.createPrimitive(src.toString());
 	}
 

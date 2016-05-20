@@ -12,7 +12,7 @@ import net.redstoneore.rson.typeadapter.TypeAdapter;
 public class TypeAdapterSound extends TypeAdapter<Sound> {
 	
 	@Override
-	public JsonElement toJsonElement(Sound src, Type typeOfSrc,JsonSerializationContext context) {
+	public JsonElement toJsonElement(Sound src, Type typeOfSrc, JsonSerializationContext context) {
 		return this.createPrimitive(src.name());
 	}
 
