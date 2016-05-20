@@ -8,7 +8,7 @@ This is under heavy development.
 ## Usage
 Create a class that you want to be saveable 
 
-```
+```java
 public class Config extends Rson<Config> {
 
 	// Singleton, you don't have to do this - organise your creation and 
@@ -29,11 +29,13 @@ public class Config extends Rson<Config> {
 
 So now you can grab this config and load/save it. If the json file doesn't exist on load it simply loads the defaults.
 
-```Config.get().load().save();```
+```java
+Config.get().load().save();
+```
 
 Now, we can access any of these fields:
 
-```
+```java
 if (Config.get().configurationOption) {
 	// .. do something
 } else {
