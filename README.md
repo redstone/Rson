@@ -13,9 +13,9 @@ public class Config extends Rson<Config> {
 
 	// Singleton, you don't have to do this - organise your creation and 
 	// defining of path however you want 
-	private static Rson i = new Config();
-	public static Rson get() { return i; }
-	public Rson() {
+	private static Config i = new Config();
+	public static Config get() { return i; }
+	public Config() {
 		super(Paths.get(Plugin.get().getDataFolder().toString(), "config.json"));
 	}
 	
