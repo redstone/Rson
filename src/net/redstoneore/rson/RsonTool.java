@@ -69,7 +69,7 @@ public class RsonTool {
 	
 	public Boolean isSpigot() {
 		try {
-			Class.forName("net.md_5.bungee.api.ChatColor");
+			Class.forName("org.spigotmc.CustomTimingsHandler");
 			return true;
 		} catch (Exception e) { }
 		
