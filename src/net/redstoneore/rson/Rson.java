@@ -74,5 +74,4 @@ public abstract class Rson<T extends Rson<T>> {
 		return true;
 	}
 
-	
 }
