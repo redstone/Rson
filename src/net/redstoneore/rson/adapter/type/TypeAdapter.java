@@ -1,4 +1,4 @@
-package net.redstoneore.rson.typeadapter;
+package net.redstoneore.rson.adapter.type;
 
 import java.lang.reflect.Type;
 

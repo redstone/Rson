@@ -1,4 +1,4 @@
-package net.redstoneore.rson.typeadapter.bukkit;
+package net.redstoneore.rson.adapter.type.bukkit;
 
 import java.lang.reflect.Type;
 import java.util.UUID;
@@ -11,7 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
-import net.redstoneore.rson.typeadapter.TypeAdapter;
+import net.redstoneore.rson.adapter.type.TypeAdapter;
 
 public class TypeAdapterLocation extends TypeAdapter<Location> {
 	

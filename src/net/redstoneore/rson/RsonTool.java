@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder;
 import net.redstoneore.rson.adapter.BukkitAdapter;
 import net.redstoneore.rson.adapter.SpigotAdapter;
 import net.redstoneore.rson.adapter.SpongeAdapter;
-import net.redstoneore.rson.typeadapter.TypeAdapterUUID;
+import net.redstoneore.rson.adapter.type.TypeAdapterUUID;
 
 /*
  * Provides a toolset for Rson

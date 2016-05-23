@@ -7,7 +7,7 @@ import org.bukkit.Sound;
 
 import com.google.gson.GsonBuilder;
 
-import net.redstoneore.rson.typeadapter.bukkit.*;
+import net.redstoneore.rson.adapter.type.bukkit.*;
 
 public class BukkitAdapter {
 

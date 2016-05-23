@@ -4,7 +4,7 @@ import org.spongepowered.api.block.BlockType;
 
 import com.google.gson.GsonBuilder;
 
-import net.redstoneore.rson.typeadapter.sponge.TypeAdapterBlockType;
+import net.redstoneore.rson.adapter.type.sponge.TypeAdapterBlockType;
 
 public class SpongeAdapter {
 

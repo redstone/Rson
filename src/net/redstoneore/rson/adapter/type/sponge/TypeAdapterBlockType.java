@@ -1,4 +1,4 @@
-package net.redstoneore.rson.typeadapter.sponge;
+package net.redstoneore.rson.adapter.type.sponge;
 
 import java.lang.reflect.Type;
 
@@ -8,7 +8,7 @@ import org.spongepowered.common.registry.type.BlockTypeRegistryModule;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 
-import net.redstoneore.rson.typeadapter.TypeAdapter;
+import net.redstoneore.rson.adapter.type.TypeAdapter;
 
 public class TypeAdapterBlockType extends TypeAdapter<BlockType> {
 	
