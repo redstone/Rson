@@ -1,6 +1,8 @@
 package net.redstoneore.rson.adapter;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 
 import com.google.gson.GsonBuilder;
@@ -17,6 +19,8 @@ public class BukkitAdapter {
 	
 	public void addAdaptersOn(GsonBuilder gsonBuilder) {
 		gsonBuilder.registerTypeAdapter(ChatColor.class, new TypeAdapterChatColor());
+		gsonBuilder.registerTypeAdapter(Chunk.class, new TypeAdapterChunk());
+		gsonBuilder.registerTypeAdapter(Location.class, new TypeAdapterLocation());
 		gsonBuilder.registerTypeAdapter(Sound.class, new TypeAdapterSound());
 	}
 	
