@@ -26,7 +26,10 @@ public class RsonTool {
 	 * @return RsonTool
 	 */
 	public static RsonTool get() {
-		if (i == null) i = new RsonTool();
+		if (i == null) {
+			i = new RsonTool();
+			i.setup();
+		}
 		return i;
 	}
 	
@@ -75,11 +78,15 @@ public class RsonTool {
 	private void setup() {
 		this.gsonBuilder = new GsonBuilder().setPrettyPrinting();
 		
+		// Global Java adapters 
 		this.gsonBuilder.registerTypeAdapter(UUID.class, new TypeAdapterUUID());
 		
+		// Add optional adapters
+		this.addOptionals();
+		
+		// Grab Gson
 		this.gson = this.gsonBuilder.create();
 		
-		this.addOptionals();
 	}
 	
 	/**

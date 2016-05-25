@@ -5,20 +5,22 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+@SuppressWarnings("unchecked")
 public abstract class Rson<T extends Rson<T>> {
+		
+	private transient Path path;
+	private transient Charset charset;
 	
-	public Rson(Path path, Charset charset) {
+	public final T setup(Path path, Charset charset) {
 		this.path = path;
 		this.charset = charset;
 		
 		// Ensure Rson tool is setup
 		RsonTool.get();
+		
+		return (T) this;
 	}
 	
-	private Path path;
-	private Charset charset;
-	
-	@SuppressWarnings("unchecked")
 	public final T save() throws Exception {
 		byte[] data = RsonTool.get().toJSON(this).getBytes(this.charset);
 		
@@ -27,9 +29,7 @@ public abstract class Rson<T extends Rson<T>> {
 		return (T) this;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public final T load() throws Exception {
-		
 		// If the path doesn't exist then there is nothing to load
 		if ( ! this.ensurePathExists()) return (T) this;
 		
