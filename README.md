@@ -13,11 +13,18 @@ public class Config extends Rson<Config> {
 
 	// Singleton, you don't have to do this - organise your creation and 
 	// defining of path however you want 
-	private static Config i = new Config();
-	public static Config get() { return i; }
-	public Config() {
-		super(Paths.get(Plugin.get().getDataFolder().toString(), "config.json"));
+	private static transient Config i;
+	public static Config get() {
+		if (i == null) {
+			// Create an instance
+			i = new Config();
+			
+			// Call setup to set the path and the charset 
+			i.setup(Paths.get(Plugin.get().getDataFolder().toString(), "config.json"), Charset.defaultCharset());
+		}
+		return i;
 	}
+	public Config() { }
 	
 	public Boolean configurationOption = true;
 	public Boolean moreConfigurationOptions = false;
