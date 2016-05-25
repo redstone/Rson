@@ -20,8 +20,9 @@ public class TypeAdapterBlockType extends TypeAdapter<BlockType> {
 	@Override
 	public BlockType valueOf(JsonElement value) {
 		for (BlockType type : BlockTypeRegistryModule.getInstance().getAll()) {
-			if (type.getName() == value.getAsString()) return type;
+			if (type.getName().equalsIgnoreCase(value.getAsString())) return type;
 		}
+		
 		return null;
 	}
 	
