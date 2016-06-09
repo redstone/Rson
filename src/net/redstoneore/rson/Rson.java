@@ -1,15 +1,29 @@
 package net.redstoneore.rson;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import net.redstoneore.rson.tasks.ARsonTask;
+import net.redstoneore.rson.tasks.RsonWatch;
+import net.redstoneore.rson.tasks.identifiers.WatchTask;
 
 @SuppressWarnings("unchecked")
 public abstract class Rson<T extends Rson<T>> {
 		
+	// Meta
 	private transient Path path;
 	private transient Charset charset;
+	
+	// Tasks
+	private transient List<ARsonTask<?>> tasks = new ArrayList<ARsonTask<?>>();
 	
 	public final T setup(Path path, Charset charset) {
 		this.path = path;
@@ -17,6 +31,15 @@ public abstract class Rson<T extends Rson<T>> {
 		
 		// Ensure Rson tool is setup
 		RsonTool.get();
+		
+		// Look over for annotation tasks
+		final List<Method> methods = new ArrayList<Method>(Arrays.asList(this.getClass().getDeclaredMethods())); 
+		
+		for (final Method method : methods) {			
+			if (method.isAnnotationPresent(WatchTask.class)) {
+				tasks.add(new RsonWatch(this, this.path.toFile(), method).start()); 
+			}
+		}
 		
 		return (T) this;
 	}
@@ -46,6 +69,10 @@ public abstract class Rson<T extends Rson<T>> {
 		}
 		
 		return (T) this;
+	}
+	
+	public final List<ARsonTask<?>> getEnabledTasks() {
+		return Collections.unmodifiableList(this.tasks);
 	}
 	
 	@Override
