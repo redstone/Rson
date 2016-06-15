@@ -1,5 +1,6 @@
 package net.redstoneore.rson;
 
+import java.lang.reflect.Type;
 import java.util.UUID;
 
 import com.google.gson.Gson;
@@ -13,7 +14,7 @@ import net.redstoneore.rson.adapter.type.TypeAdapterUUID;
 /*
  * Provides a toolset for Rson
  */
-public class RsonTool {
+public final class RsonTool {
 	
 	// ---------------------------------------- //
 	// SINGLETON
@@ -70,6 +71,15 @@ public class RsonTool {
 	 */
 	public Object fromJson(String json, Class<?> classOfT) {
 		return this.gson.fromJson(json, classOfT);
+	}
+	
+	/**
+	 * Add a Rson adapter
+	 * @param what type it is for
+	 * @param class for adapter
+	 */
+	public void addAdapter(Type type, Object adapter) {
+		this.gsonBuilder.registerTypeAdapter(type, adapter);
 	}
 	
 	/**
