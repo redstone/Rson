@@ -1,10 +1,12 @@
 package net.redstoneore.rson.adapter;
 
 import org.spongepowered.api.block.BlockType;
+import org.spongepowered.api.item.inventory.ItemStack;
 
 import com.google.gson.GsonBuilder;
 
 import net.redstoneore.rson.adapter.type.sponge.TypeAdapterBlockType;
+import net.redstoneore.rson.adapter.type.sponge.TypeAdapterItemStack;
 
 public class SpongeAdapter {
 
@@ -16,6 +18,7 @@ public class SpongeAdapter {
 	
 	public void addAdaptersOn(GsonBuilder gsonBuilder) {
 		gsonBuilder.registerTypeAdapter(BlockType.class, new TypeAdapterBlockType());
+		gsonBuilder.registerTypeAdapter(ItemStack.class, new TypeAdapterItemStack());
 	}
 	
 }
