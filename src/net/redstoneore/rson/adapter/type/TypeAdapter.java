@@ -18,16 +18,17 @@ public abstract class TypeAdapter<T> implements JsonDeserializer<T>, JsonSeriali
 	}
 	
 	@Override
-	public final JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
+	public final JsonElement serialize(T src, Type type, JsonSerializationContext context) {
 		if (src == null) return JsonNull.INSTANCE;
-		return this.toJsonElement(src, typeOfSrc, context);
+		return this.toJsonElement(src, type, context);
 	}
 	
 	@Override
-	public final T deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+	public final T deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 		return this.valueOf(json);
 	}
 
 	public abstract JsonElement toJsonElement(T src, Type typeOfSrc, JsonSerializationContext context);
 	public abstract T valueOf(JsonElement value);
+	
 }
