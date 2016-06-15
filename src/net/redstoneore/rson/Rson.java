@@ -1,6 +1,5 @@
 package net.redstoneore.rson;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
@@ -16,7 +15,7 @@ import net.redstoneore.rson.tasks.RsonWatch;
 import net.redstoneore.rson.tasks.identifiers.WatchTask;
 
 @SuppressWarnings("unchecked")
-public abstract class Rson<T extends Rson<T>> {
+public abstract class Rson<T> {
 		
 	// Meta
 	private transient Path path;
