@@ -2,8 +2,8 @@ package net.redstoneore.rson.adapter.type.sponge;
 
 import java.lang.reflect.Type;
 
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockType;
-import org.spongepowered.common.registry.type.BlockTypeRegistryModule;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
@@ -19,7 +19,7 @@ public class TypeAdapterBlockType extends TypeAdapter<BlockType> {
 
 	@Override
 	public BlockType valueOf(JsonElement value) {
-		for (BlockType type : BlockTypeRegistryModule.getInstance().getAll()) {
+		for (BlockType type : Sponge.getRegistry().getAllOf(BlockType.class)) {
 			if (type.getName().equalsIgnoreCase(value.getAsString())) return type;
 		}
 		

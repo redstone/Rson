@@ -1,0 +1,19 @@
+apply plugin: 'java'
+
+repositories {
+	mavenCentral()
+	maven {
+		name = 'sponge'
+		url = 'http://repo.spongepowered.org/maven'
+	}
+	
+	maven {
+		name = 'bukkit'
+		url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
+	}
+}
+
+dependencies {	
+	compile group: 'org.spongepowered', name: 'spongeapi', version: '4.1.0'
+	compile group: 'org.bukkit', name: 'bukkit', version: '1.11-R0.1-SNAPSHOT'
+}

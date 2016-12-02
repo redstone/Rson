@@ -2,9 +2,10 @@ package net.redstoneore.rson.adapter.type.sponge;
 
 import java.lang.reflect.Type;
 
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.item.ItemType;
+import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
-import org.spongepowered.common.registry.type.ItemTypeRegistryModule;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,14 +20,18 @@ public class TypeAdapterItemStack extends TypeAdapter<ItemStack> {
 	// ----------------------------------------
 	
 	public static ItemStack from(JsonElement value) {
-		JsonObject jsonIS = value.getAsJsonObject();
+		JsonObject jsonItemStack = value.getAsJsonObject();
+		String itemId = jsonItemStack.get("type").getAsString();
 		
-		ItemType itemType = ItemTypeRegistryModule.getInstance().getById(jsonIS.get("type").getAsString()).get();
-		Integer quantity = jsonIS.get("quantity").getAsInt();
+		for (ItemType itemType : Sponge.getRegistry().getAllOf(ItemType.class)) {
+			if (itemType.getId() == itemId) {
+				Integer quantity = jsonItemStack.get("quantity").getAsInt();
+				ItemStack is = ItemStack.of(itemType, quantity);
+				return is;
+			}
+		}
 		
-		ItemStack is = ItemStack.of(itemType, quantity);
-		
-		return is;
+		return null;
 	}
 	
 	public static JsonElement from(ItemStack src) {
