@@ -1,19 +1,39 @@
 apply plugin: 'java'
 
 repositories {
+	jcenter()
 	mavenCentral()
 	maven {
 		name = 'sponge'
 		url = 'http://repo.spongepowered.org/maven'
 	}
-	
+
 	maven {
 		name = 'bukkit'
 		url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
 	}
 }
 
-dependencies {	
+dependencies {
 	compile group: 'org.spongepowered', name: 'spongeapi', version: '4.1.0'
 	compile group: 'org.bukkit', name: 'bukkit', version: '1.11-R0.1-SNAPSHOT'
+	compile 'com.google.code.gson:gson:2.7'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+shadowJar {
+   dependencies {
+      include(dependency('com.google.code.gson:gson'))
+   }
+   relocate "com.google.gson", "net.redstoneore.rson.lib.gson"
 }
