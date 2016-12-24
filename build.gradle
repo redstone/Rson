@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
-	compile group: 'org.spongepowered', name: 'spongeapi', version: '4.1.0'
-	compile group: 'org.bukkit', name: 'bukkit', version: '1.11-R0.1-SNAPSHOT'
+	compileOnly group: 'org.spongepowered', name: 'spongeapi', version: '4.1.0'
+	compileOnly group: 'org.bukkit', name: 'bukkit', version: '1.11-R0.1-SNAPSHOT'
 	compile 'com.google.code.gson:gson:2.7'
 }
 
@@ -37,3 +37,5 @@ shadowJar {
    }
    relocate "com.google.gson", "net.redstoneore.rson.lib.gson"
 }
+
+build.finalizedBy(shadowJar)
