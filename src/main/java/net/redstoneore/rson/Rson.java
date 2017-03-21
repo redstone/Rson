@@ -29,7 +29,7 @@ public abstract class Rson<T> {
 		this.charset = charset;
 		
 		// Ensure Rson tool is setup
-		RsonTool.get();
+		RsonTool.isSetup();
 		
 		// Look over for annotation tasks
 		final List<Method> methods = new ArrayList<Method>(Arrays.asList(this.getClass().getDeclaredMethods())); 
@@ -44,7 +44,7 @@ public abstract class Rson<T> {
 	}
 	
 	public final T save() throws Exception {
-		byte[] data = RsonTool.get().toJSON(this).getBytes(this.charset);
+		byte[] data = RsonTool.toJSON(this).getBytes(this.charset);
 		
 		Files.write(this.path, data);
 		
@@ -57,7 +57,7 @@ public abstract class Rson<T> {
 		
 		// Load json into new class
 		String rawJson = new String(Files.readAllBytes(path));
-		Rson<?> rsonLoaded = (Rson<?>) RsonTool.get().fromJson(rawJson, getClass());
+		Rson<?> rsonLoaded = (Rson<?>) RsonTool.fromJson(rawJson, getClass());
 		
 		// Update fields in our class
 		for (Field field : rsonLoaded.getClass().getFields()) {

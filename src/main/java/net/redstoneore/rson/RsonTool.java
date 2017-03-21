@@ -11,44 +11,25 @@ import net.redstoneore.rson.adapter.SpigotAdapter;
 import net.redstoneore.rson.adapter.SpongeAdapter;
 import net.redstoneore.rson.adapter.type.TypeAdapterUUID;
 
-/*
- * Provides a toolset for Rson
- */
 public final class RsonTool {
 	
 	// ---------------------------------------- //
-	// SINGLETON
+	// DEPRECATED
 	// ---------------------------------------- //
 	
-	private static RsonTool i;
+	@Deprecated 
+	private static RsonTool i = new RsonTool();
 	
-	/**
-	 * Fetch the Rson tool
-	 * @return RsonTool
-	 */
-	public static RsonTool get() {
-		if (i == null) {
-			i = new RsonTool();
-			i.setup();
-		}
-		return i;
-	}
-	
-	// ---------------------------------------- //
-	// CONSTRUCT
-	// ---------------------------------------- //
-	
-	public RsonTool() {
-		// Call the setup on construct
-		this.setup();
-	}
+	@Deprecated 
+	public static RsonTool get() { return i; }
 	
 	// ---------------------------------------- //
 	// FIELDS
 	// ---------------------------------------- //
 	
-	private GsonBuilder gsonBuilder;
-	private Gson gson;
+	private static GsonBuilder gsonBuilder;
+	private static Gson gson;
+	private static Boolean isSetup = isSetup();
 	
 	// ---------------------------------------- //
 	// METHODS
@@ -59,8 +40,8 @@ public final class RsonTool {
 	 * @param Rson object
 	 * @return JSON representation
 	 */
-	public String toJSON(Rson<?> rson) {
-		return this.gson.toJson(rson);
+	public static String toJSON(Rson<?> rson) {
+		return gson.toJson(rson);
 	}
 	
 	/**
@@ -69,8 +50,8 @@ public final class RsonTool {
 	 * @param class type
 	 * @return class from json
 	 */
-	public Object fromJson(String json, Class<?> classOfT) {
-		return this.gson.fromJson(json, classOfT);
+	public static Object fromJson(String json, Class<?> classOfT) {
+		return gson.fromJson(json, classOfT);
 	}
 	
 	/**
@@ -78,41 +59,43 @@ public final class RsonTool {
 	 * @param what type it is for
 	 * @param class for adapter
 	 */
-	public void addAdapter(Type type, Object adapter) {
-		this.gsonBuilder.registerTypeAdapter(type, adapter);
+	public static void addAdapter(Type type, Object adapter) {
+		gsonBuilder.registerTypeAdapter(type, adapter);
 	}
 	
 	/**
 	 * Sets up type adapters for Gson
 	 */
-	private void setup() {
-		this.gsonBuilder = new GsonBuilder().setPrettyPrinting();
+	private static Boolean setup() {
+		gsonBuilder = new GsonBuilder().setPrettyPrinting();
 		
 		// Global Java adapters 
-		this.gsonBuilder.registerTypeAdapter(UUID.class, new TypeAdapterUUID());
+		gsonBuilder.registerTypeAdapter(UUID.class, new TypeAdapterUUID());
 		
 		// Add optional adapters
-		this.addOptionals();
+		addOptionals();
 		
 		// Grab Gson
-		this.gson = this.gsonBuilder.create();
+		gson = gsonBuilder.create();
+		
+		return true;
 		
 	}
 	
 	/**
 	 * Add in optional adapters
 	 */
-	private void addOptionals() {
-		if (this.isBukkit()) {
-			new BukkitAdapter().addAdaptersOn(this.gsonBuilder);
+	private static void addOptionals() {
+		if (isBukkit()) {
+			new BukkitAdapter().addAdaptersOn(gsonBuilder);
 		}
 		
-		if (this.isSpigot()) {
-			new SpigotAdapter().addAdaptersOn(this.gsonBuilder);
+		if (isSpigot()) {
+			new SpigotAdapter().addAdaptersOn(gsonBuilder);
 		}
 		
-		if (this.isSponge()) {
-			new SpongeAdapter().addAdaptersOn(this.gsonBuilder);
+		if (isSponge()) {
+			new SpongeAdapter().addAdaptersOn(gsonBuilder);
 		}
 	}
 	
@@ -120,7 +103,7 @@ public final class RsonTool {
 	 * Detect Bukkit type
 	 * @return true if Bukkit
 	 */
-	public Boolean isBukkit() {
+	public static Boolean isBukkit() {
 		try {
 			Class.forName("org.bukkit.Bukkit");
 			return true;
@@ -133,7 +116,7 @@ public final class RsonTool {
 	 * Detect Spigot type
 	 * @return true if Spigot
 	 */
-	public Boolean isSpigot() {
+	public static Boolean isSpigot() {
 		try {
 			Class.forName("org.spigotmc.CustomTimingsHandler");
 			return true;
@@ -146,13 +129,21 @@ public final class RsonTool {
 	 * Detect Sponge type
 	 * @return true if Sponge
 	 */
-	public Boolean isSponge() {
+	public static Boolean isSponge() {
 		try {
 			Class.forName("org.spongepowered.api.plugin.Plugin");
 			return true;
 		} catch (Exception e) { }
 		
 		return false;
+	}
+	
+	public static Boolean isSetup() {
+		if (isSetup == false) {
+			setup();
+		}
+		
+		return isSetup;
 	}
 	
 }
